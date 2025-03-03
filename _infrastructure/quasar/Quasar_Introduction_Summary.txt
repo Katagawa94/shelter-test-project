@@ -1,0 +1,634 @@
+How to Create a Cross-Platform App with Quasar 2 and Vue 3
+Overview of the Money Balls App
+
+    The tutorial introduces the creation of an app called "Money Balls" using Quasar 2, Vue 3, and the Composition API.
+
+    Users can add income entries (e.g., "spends from granny" for 500) and expense entries (e.g., "adult diapers" for -10.99), with color-coded displays: green for income and red for expenses.
+
+    The app features a real-time balance display at the bottom, formatted as currency, along with swipe-to-delete functionality for entries.
+
+Features of Money Balls
+
+    Users can edit entries in place by clicking on name or amount fields; they can also mark entries as paid by swiping right.
+
+    A settings page allows users to disable delete prompts, show running balances, change currency symbols, and toggle dark mode preferences.
+
+    All data is maintained across app restarts or web page reloads, ensuring user settings are preserved.
+
+Technical Aspects of Development
+
+    The course will utilize Pinia for state management alongside various Quasar plugins and components to enhance functionality.
+
+    The app will be developed to run on five platforms: web browser, iOS, Android, Mac, and Windows.
+
+Understanding Quasar Framework
+
+    Quasar is a framework built on Vue.js 3 that provides numerous material components and helpful extras like plugins for dialogues and notifications.
+
+    It supports platform detection allowing apps to behave differently based on the user's device while maintaining a single codebase.
+
+Deployment Options
+
+    Developers can deploy applications as single-page applications (SPAs), server-side rendered apps (SSR), progressive web apps (PWAs), mobile apps via Cordova or Capacitor, or desktop apps using Electron.
+
+    This course focuses specifically on deploying the Money Balls app as a SPA on the web and mobile platforms using Capacitor.
+
+Prerequisites for Learning
+
+    A basic understanding of JavaScript, Vue 3, and the Composition API is recommended before starting this course.
+
+Development Environment Setup
+
+    The instructor uses VS Code on a Mac with specific extensions such as Auto Rename Tag and Material Icon Theme to enhance development efficiency.
+
+Setup and Installation of Quasar Framework
+Setting Up Development Environment
+
+    The course will utilize Chrome with the Vue.js Dev Tools extension for debugging Vue and Quasar code. Users are instructed to install this extension from the Chrome Web Store.
+
+    To start using Quasar, the installation of Node.js is required. The recommended version is 18 due to issues encountered with version 20 during course creation.
+
+Node Version Management
+
+    NVM (Node Version Manager) is suggested for managing multiple Node.js versions. While not covered in detail, users can find installation instructions on GitHub.
+
+    It’s advised to read NVM documentation carefully if opting for this method of version management.
+
+Installing Quasar CLI
+
+    After installing Node.js, users can create Quasar projects using various package managers; however, npm is chosen here as it comes bundled with Node.js.
+
+    The command npm install -g @quasar/cli is executed in the terminal to globally install the Quasar CLI.
+
+Creating a New Quasar Project
+
+    Users initiate a new project by running npm init quasar, selecting options such as project name ("quazar Das money balls"), version (V2), and JavaScript as the language.
+
+    For build tools, Vite is selected over Webpack for its speed. Other configurations include enabling State Management with Pinia and choosing SCSS syntax for CSS pre-processing.
+
+Project Structure Overview
+
+    Upon project creation completion, users are guided through launching their project using quasar dev. This starts a basic boilerplate application in the browser.
+
+    Key files in the root directory include:
+
+    index.html: Main HTML file where the app injects.
+
+    quazar.config.js: Configuration file for app settings including plugins and animations.
+
+Understanding Folders within a Quasar Project
+
+    The public folder contains static assets that remain unprocessed during production builds, while the src folder holds source files that may be processed by Vite.
+
+    Within src, there are several important subfolders:
+
+    assets: For images and fonts that will be processed.
+
+    boot: Contains boot files that run before app initialization.
+
+App Layout and Structure Overview
+Introduction to App Components
+
+    The app layout includes a left-hand side drawer, a header at the top, and a root view component for loading pages.
+
+    The pages folder currently contains an error page for invalid URLs and an index page.
+
+Routing and State Management
+
+    A router folder is established to manage different routes for navigation within the app.
+
+    The stores folder will contain Pinia stores for state management, with an example store already created.
+
+Customizing the Layout
+
+    The layout customization begins in Source/layouts/MainLayout.vue, focusing on header positioning above the navigation drawer.
+
+    Adjustments to header and footer positions can be made using the View Property on the QLayout component.
+
+Using Quasar's Layout Builder
+
+    Quasar's layout builder is utilized to configure components like headers, footers, and drawers according to app requirements.
+
+    Options are selected to include a left-side drawer while disabling unnecessary features like right-side drawers and navigation tabs.
+
+Finalizing Header Design
+
+    After exporting the layout configuration, adjustments are made to ensure that the header spans across the top of the page.
+
+    The default title in QToolbar is replaced with "Money Balls," along with adding a relevant icon next to it.
+
+Icon Selection and Positioning
+Choosing Appropriate Icons
+
+    Material icons are explored online; specifically, a savings icon resembling a piggy bank is chosen for its relevance.
+
+Centering Title and Icon in Header
+
+    To center both title and icon in the header, an absolute center class from Quasar’s styling options is applied.
+
+Styling Enhancements
+Color Customization
+
+    The primary color of the header is changed from blue to green by modifying variables in quazarDovVariables.scss.
+
+Drawer Background Color Adjustment
+User Interface Customization in Quasar Framework
+Utilizing Color Classes
+
+    The Quasar framework provides various color classes, such as text-primary for primary text color and BG-primary for primary background color. These can be applied to enhance UI elements.
+
+Modifying the Drawer Component
+
+    In the main layout view, a class of BG-primary is added to the Q drawer component, changing its background color. However, the text remains dark.
+
+Improving Text Visibility
+
+    To improve visibility, a class of text-white is added to essential links and captions within components. This change enhances readability against the new background.
+
+Setting Up Application Routes
+
+    The application will have two pages: an entries page for managing income/expenses and a settings page for app configurations. Routes are defined in router.js.
+
+Renaming and Editing Pages
+
+    The default index page is renamed to "entries" after updating routing paths. The content is simplified by removing unnecessary images and scripts.
+
+Creating Additional Pages
+Duplicating Page Structure
+
+    A duplicate action extension allows easy creation of a settings page from the entries page template. This streamlines development by maintaining consistent structure.
+
+Configuring Settings Route
+
+    After creating the settings page, routes are updated in router.js, allowing navigation between entries and settings using specific paths.
+
+Enhancing Navigation Experience
+Adding Navigation Links
+
+    To improve user experience, navigation links are added to the left drawer. The essential links text is changed to "navigation," indicating their purpose clearly.
+
+Refactoring Components for Reusability
+
+    The essential link component is renamed to "nav link" and moved into a dedicated folder for better organization within components.
+
+Finalizing Navigation Setup
+Updating Component Imports
+
+    Import statements in the main layout file are updated to reflect changes made during refactoring. This ensures that all components function correctly without errors.
+
+Simplifying Navigation Links
+
+    The navigation links array is streamlined by retaining only necessary links (entries and settings), enhancing clarity in navigation options presented to users.
+
+Adjusting Link Properties
+
+    Caption properties are removed from nav links since they will only display icons and titles, simplifying their appearance while maintaining functionality.
+
+Navigation and Link Functionality in Quasar
+Fixing Navigation Links
+
+    The settings icon is linked to the settings page, but clicking navigation items opens a new tab instead of navigating within the app.
+
+    The issue arises from the target attribute set to _blank, which needs to be removed. Additionally, the href prop should be replaced with a to prop for proper routing.
+
+    After making these changes, navigation links function correctly, allowing users to switch between settings and entries pages seamlessly.
+
+Active State Styling
+
+    Although links are now functional, there is no visual indication of the active page. Inspecting elements reveals that only active links have a specific class (q--link--exact-active).
+
+    To enhance user experience, CSS will be added to style active links differently by targeting this class.
+
+Implementing CSS for Active Links
+
+    A comment labeled "draw nav" is added in the CSS file to indicate where styles for navigation will be applied. The Q-drawer component's class name matches its functionality.
+
+    Default opacity for inactive Q-items is set to 0.6; when they are active (having the specific class), their opacity is changed back to 1 for better visibility.
+
+Adjusting Drawer Width and Breakpoints
+Modifying Drawer Properties
+
+    The width of the drawer is adjusted since current link widths do not require excessive space. A width prop of 250 pixels is implemented.
+
+Responsive Design Considerations
+
+    By default, the drawer appears on screens wider than approximately 1400 pixels; below this threshold, it can only be activated via a button.
+
+    To improve usability on tablets in portrait mode (e.g., iPads), the breakpoint prop is set at 767 pixels so that drawers remain visible on such devices.
+
+Building Entries Page Functionality
+Creating Entry List Structure
+
+    Work begins on constructing an entries page featuring a list where each entry displays its name on one side and amount on another using Quasar's list components.
+
+Utilizing Quasar Components
+
+    Reference material from Quasar documentation guides how to implement Q-item components effectively for displaying entry names and amounts.
+
+Finalizing Layout Adjustments
+
+    Flex classes causing centering issues are removed from Q-page components. Fixed-width styles are also eliminated so that lists can expand across available space.
+
+Q List Component Enhancements
+Adding Separators and Borders
+
+    The Q list API allows the use of a separator prop to add visual separators between items in a list.
+
+    A bordered prop can be added to the Q list component to create a border around the list, enhancing its visual structure.
+
+Setting Up Entries
+
+    A reference (ref) is created to store entries in an array, which will hold objects with properties such as ID, name, and amount.
+
+    Unique IDs are generated for each entry using a systematic approach (e.g., id1, id2), ensuring that each entry can be distinctly identified.
+
+Displaying Entries on the Page
+
+    The entries are displayed using a v-for loop directive that iterates through the entries array, assigning each object to an entry placeholder.
+
+    The names and amounts of each entry are rendered on the page by replacing static text with dynamic expressions (e.g., {{ entry.name }}).
+
+Formatting Amounts as Currency
+Initial Formatting Function
+
+    A function named currency is created to format numbers as currency strings for better presentation.
+
+    The desired formatting includes adding symbols for positive and negative amounts along with proper spacing and comma separation.
+
+Implementing JavaScript's Local String Method
+
+    JavaScript's toLocaleString() method is utilized within the currency function to format numbers according to locale-specific conventions.
+
+    Options are added to ensure that decimal places are consistently shown (minimum and maximum fraction digits set to two).
+
+Final Adjustments for Positive/Negative Symbols
+Currency Formatting and Color Coding in App Development
+Implementing Currency Symbols
+
+    The process begins with adding a positive/negative symbol to the returned string, utilizing template strings for formatting.
+
+    An issue arises with negative entries displaying an extra minus symbol; this is addressed by converting amounts to their absolute values using Math.abs.
+
+Enhancing Amount Display
+
+    A new constant, amountPositive, is introduced to ensure only one minus symbol appears for expenses by converting negative amounts to positive.
+
+    The currency symbol is hardcoded initially as a dollar sign, with plans for user customization later.
+
+Creating Reusable Composables
+
+    The currency formatting function is transformed into a composable for reuse across different app sections, stored in a dedicated folder.
+
+    After creating the composable file named useCurrency.js, it’s imported into the relevant view component.
+
+Troubleshooting Import Issues
+
+    An import error occurs due to the absence of an export keyword in the composable; this is resolved by adding export at the beginning of the function.
+
+Styling Entries Based on Value
+
+    To improve visual clarity, income entries are styled green and expense entries red using classes from Quasar's color palette.
+
+    Classes like text-positive and text-negative are applied conditionally based on whether entry amounts are greater or less than zero.
+
+Reducing Code Duplication
+Implementing Dynamic Entry Colors in Vue.js
+Enhancing Entry Color Logic
+
+    The logic for determining entry colors is established: return a positive class for amounts greater than zero, and a negative class for amounts less than zero.
+
+    The useAmountColor composable is integrated into the Q item sections to streamline color assignment based on entry amounts, maintaining green for income and red for expenses.
+
+Improving Text Presentation
+
+    A focus on text styling leads to making all entry texts bold using Quasar's typography classes.
+
+    The addition of the text-weight-bold class enhances visual clarity across both Q item sections.
+
+Customizing Theme Colors
+
+    Adjustments are made to the theme colors; replacing default green and red with more visually appealing shades (7EB004 for positive and D73F01 for negative).
+
+    A consistent gray color (gray-6) is introduced for entries that equal zero, ensuring uniformity in appearance.
+
+Adding New Entry Form
+
+    A new form component is created within a Q footer to facilitate adding new entries, ensuring it remains docked at the bottom of the page.
+
+    Utilizing Quasar's grid system allows layout organization with name input on the left, amount input in the center, and an add button on the right.
+
+Implementing Input Fields
+
+    The structure includes three columns within a row div; placeholders are added temporarily while developing functionality.
+
+    To optimize space usage, an auto-sizing column class (col-auto) is applied to ensure that the button column shrinks appropriately around its content.
+
+Styling Input Components
+
+    An outline design input field is selected from Quasar components; adjustments are made by removing unnecessary props and changing labels.
+
+    Background color customization improves aesthetics by setting it to white using bg-color prop on inputs.
+
+Final Touches on Layout
+
+    Padding classes from Quasar are utilized to enhance spacing around elements, improving overall layout appearance.
+
+Input Field Customization in Quasar Framework
+Adjusting Input Field Properties
+
+    The placeholder for the input field is set to disappear when typing begins, enhancing user experience.
+
+    A second input field for "amount" is created by copying the first Q input and changing its placeholder.
+
+    To align text to the right in the amount field, a CSS helper class text-right is attempted but initially fails due to incorrect application.
+
+Correcting Text Alignment
+
+    The alignment issue is resolved by using the input-class prop on the underlying input element instead of a standard class attribute.
+
+    The type of the amount field is changed to "number," restricting inputs to numeric characters only.
+
+Enabling Decimal Inputs
+
+    An attribute step with a value of 0.01 is added to allow decimal increments for currency entry, improving functionality.
+
+    A CSS adjustment adds margin between the number input and its spinner buttons, enhancing visual spacing.
+
+Adding Buttons and Layout Adjustments
+Implementing Action Buttons
+
+    A button from Quasar's component library is copied into a new column, transforming it into an action button.
+
+    The icon for this button is updated from "shopping cart" to "add," aligning with intended functionality.
+
+Enhancing Layout Spacing
+
+    Gutter space between columns is introduced by applying a specific class (q-call-gutter DSM) to improve layout aesthetics.
+
+Displaying Balance Information
+Creating a Balance Display Section
+
+    A new row above the form displays balance information, utilizing two columns: one for label ("Balance") and another for hardcoded balance value (e.g., +3999).
+
+Styling Adjustments
+
+    The footer's default green background color is overridden by making it transparent while applying primary color styling to the form itself.
+
+Enhancing UI Elements and Calculating Balance
+Adjusting Text Size and Alignment
+
+    Increased the text size in each column for better visibility.
+
+    Aligned the amount text to the right by adding a specific class from the typography page.
+
+    Added padding to the row to prevent text from being too close to the corners, using q-PX for horizontal padding.
+
+Adding Visual Enhancements
+
+    Implemented a drop shadow effect on the balance widget by selecting an appropriate shadow class from Quasar's style guide.
+
+    Noted that elements were slightly overlapping; added bottom margin (q-MB) to create space between components.
+
+Refining Padding and Layout
+
+    Adjusted padding settings on the form row, opting for less padding at the top while maintaining it on sides and bottom with q-PB.
+
+Creating a Computed Property for Balance Calculation
+
+    Initiated development of a computed property to calculate total balance from entries, importing necessary modules from Vue.
+
+    Proposed two methods for summing amounts: looping through entries or utilizing a more efficient approach.
+
+Implementing Efficient Balance Calculation
+
+    Demonstrated how to loop through entries using forEach, logging each entry during iteration.
+
+    Transitioned to using the reduce method for calculating balance, which simplifies code by accumulating values in one pass through entries.
+
+Logging and Debugging
+
+    Logged accumulator and current value during iterations of reduce method to understand flow of data.
+
+Finalizing Balance Display with Formatting
+
+    Wrapped balance display in currency formatting composable for proper presentation.
+
+Setting Up the Add Entry Form
+Adjusting Class Attributes
+
+    The text class "positive" is being overridden by "grade-7". Removing "grade-7" allows the balance to display correctly in green.
+
+    Changing rent to 99,999 results in a negative overall balance displayed in red.
+
+Creating a Reactive Object for Form Data
+
+    A reactive object will be set up to store form data for name and amount fields.
+
+    In entries.view, a new constant called addEntryForm is created as a reactive object with fields for name (empty string) and amount (null).
+
+Binding Properties to Form Fields
+
+    The properties of addEntryForm are bound to the input fields using v-model.
+
+    Testing shows that inputs reflect changes in real-time, confirming proper binding.
+
+Submitting the Form
+
+    The current div containing the form is changed to a <q-form> component for easier submission handling.
+
+    An event listener for form submission is added, triggering an addEntry method.
+
+Implementing the Add Entry Method
+
+    The addEntry method logs out when triggered. A submit button type is set to ensure functionality.
+
+    Upon clicking or pressing enter, "add entry" logs successfully, indicating that the method works.
+
+Creating New Entries
+Defining New Entry Structure
+
+    A new entry object structure includes ID, name, and amount properties sourced from addEntryForm.
+
+Generating Unique IDs
+
+    Quasar's utility function uid is imported to generate unique IDs for each entry.
+
+Logging New Entries
+
+    After entering values and submitting, new entries log correctly with their respective details including unique IDs.
+
+Fixing Balance Calculation Issues
+Adding Entries and Observing Errors
+
+    An example entry ("eBay sale", $199.99) adds successfully but causes discrepancies in total balance calculations.
+
+Debugging with Vue Dev Tools
+
+    Using Vue Dev Tools reveals that amounts are stored as strings instead of numbers due to incorrect input handling.
+
+Ensuring Correct Data Types
+Modifying Input Types
+
+    To resolve data type issues, it’s necessary to ensure amounts are treated as numbers rather than strings during input submission.
+
+Implementing Number Modifier
+
+    Adding a number modifier (v-model.number) ensures that values entered into the amount field are stored as numbers.
+
+Final Testing
+How to Reset a Form and Refocus Input in Vue.js
+Improving the Add Entry Method
+
+    The current add entry method retains old values in input fields; it's suggested to reset the form for better user experience.
+
+    A new constant newEntry is introduced using Object.assign, which simplifies the assignment of properties from multiple objects into an empty object.
+
+    The ID property is added to the new entry by creating an object with uid, ensuring that all necessary data is included when pushing entries.
+
+Resetting the Form
+
+    A new method called addEntryFormReset is created, initially logging "reset" for testing purposes after adding a new entry.
+
+    To reset the form, properties like name and amount are set back to their default values, ensuring users can start fresh after each entry.
+
+    Instead of manually resetting each field, a default object for the form is proposed. This allows easy reassignment of default values upon reset.
+
+Utilizing Default Objects
+
+    A constant named addEntryFormDefault holds default values for name and amount, streamlining the reset process.
+
+    The spread operator (...) is used to copy properties from this default object into the reactive form object, enhancing code efficiency.
+
+    During form resets, Object.assign reassigns properties from addEntryFormDefault, effectively restoring initial states without repetitive code.
+
+Enhancing User Experience
+
+    After adding an entry, it’s important to refocus on the name input field so users can quickly add more entries without interruption.
+
+    Reference (ref) attributes are added to input fields in Vue.js components to facilitate programmatic focus on elements post-entry submission.
+
+Implementing Swipe-to-Delete Functionality
+
+    Discussion shifts towards enabling deletion of entries via swipe gestures using Quasar's slide item component for improved mobile usability.
+
+    Examples from Quasar documentation illustrate how swipe actions can be implemented on list items, enhancing interactivity within applications.
+
+Fixing Swipe Functionality in Q Slide Item
+Adjusting the V4 Loop for Individual Swiping
+
+    The initial implementation of swiping was not functioning correctly as it affected all entries simultaneously. This was due to the V4 Loop being nested within the Q slide item, causing collective behavior instead of individual swipes.
+
+    To resolve this, the V4 Loop and key prop were moved from the Q item to the Q slide item, allowing for independent swiping functionality. After making these changes, individual entries could now be swiped left or right successfully.
+
+Enhancing Visual Feedback for Deletion
+
+    A design change was proposed to visually indicate deletion when an entry is swiped left. The area with a clock icon was suggested to be changed to red and possibly replaced with a bin icon for clarity on its function.
+
+    Reference was made to custom colors available on the Quasar site, specifically using left color and right color props in the Q slide item configuration. The left swipe would use a positive (green) color while the right swipe would utilize a negative (red) color for better user experience.
+
+Implementing Delete Functionality
+
+    The next step involved replacing the clock icon with a delete icon sourced from Material Icons, enhancing user recognition of deletion action upon swiping left. This included commenting out unnecessary code related to right swipe functionality temporarily while focusing on deletion features.
+
+    A method was created that triggers when an entry is swiped left; this method prompts users for confirmation before proceeding with deletion, ensuring they do not accidentally remove an entry without consent.
+
+Integrating Confirmation Dialog
+
+    To confirm deletions effectively, integration of Quasar's dialogue plugin was necessary; this required installation and configuration within the project's Quasar config file by adding 'dialog' to plugins array. Following this setup allowed access to dialogue functionalities in code implementations.
+
+    Upon implementing dialogue confirmation logic into the swipe event handler, it became evident that additional imports were needed (specifically useQuasar) which were added accordingly to ensure proper functionality of dialog displays during user interactions.
+
+Customizing Dialogue Appearance
+
+    Once functional dialogues appeared upon swipe actions, customization options were explored including changing titles and messages displayed in dialogues for clarity—such as setting "Delete Entry" as title and confirming if users want to delete their selected entry through tailored messaging prompts.
+
+How to Implement a Cancel and Delete Functionality in a Slide Item Component
+Setting Up the Cancel Button
+
+    Introduces a no caps property to prevent text from being displayed in uppercase, enhancing user experience.
+
+    Discusses the addition of a cancel button with default label "Cancel" and primary theme color for better visibility.
+
+Handling User Actions
+
+    Explains the need to reset the slide item when the user clicks cancel, preventing them from being stuck on an action.
+
+    Describes how to access the reset method from the details object returned by swipe events, allowing for component state reset.
+
+Deleting an Entry
+
+    Outlines creating a delete entry method that logs actions for debugging purposes.
+
+    Identifies the challenge of obtaining the ID or index of entries to delete; suggests passing event data down through methods.
+
+Accessing Entry Information
+
+    Demonstrates how to pass additional parameters (entry ID) during swipe events for easier access within methods.
+
+    Confirms successful logging of entry IDs when swiping and clicking delete, ensuring correct identification of entries.
+
+Removing Entries from Array
+
+    Utilizes JavaScript's findIndex method to locate an entry's position in an array based on its ID.
+
+    Implements splice method to remove identified entries from the array, confirming functionality through testing.
+
+Enhancing User Feedback Before Deletion
+
+    Suggests displaying entry details before deletion as a reminder for users, improving decision-making.
+
+    Introduces HTML display capability in dialogues by setting options that allow formatted messages with injected variables.
+
+Displaying Entry Details Dynamically
+
+    Proposes using template strings for dynamic content display within dialogues, enhancing user interface aesthetics.
+
+How to Implement Currency Formatting and Notifications in Your App
+Injecting Entry Details
+
+    The process begins by injecting entry details into the app, specifically the name and amount of an entry. This is done by replacing specific text with dynamic values using curly braces.
+
+Formatting Amounts as Currency
+
+    After setting up the entry details, the next step involves formatting the amount as currency using a previously created composable function. This enhances readability for users.
+
+Color Coding Entries
+
+    To improve user experience, amounts are color-coded based on their nature: positive entries (income) appear in green while negative entries (expenses) show in red. This visual cue helps users quickly identify financial trends.
+
+Deleting Entries and Notifications
+
+    The functionality to delete an entry remains intact after implementing new features. Additionally, a notification system is introduced using Quasar's notify plugin to alert users when an entry is deleted.
+
+Positioning Notifications Effectively
+
+    The notification's position can be adjusted for better visibility. By modifying settings within the Quasar configuration file, notifications can be displayed at the top of the app instead of obstructing other fields.
+
+Future Enhancements and Modules Overview
+Upcoming Features in Module 7 to 20
+
+    Future modules will introduce state management through Pinia setup store, allowing for better organization of data and methods related to entries.
+
+Component Breakdown
+
+    In module 8, the application will be divided into child components for various functionalities like balance widgets and add-entry forms, enhancing modularity.
+
+Editing Capabilities
+
+    Module 9 will enable users to edit names or amounts directly via a Q popup component, streamlining user interaction with their data.
+
+Sorting Functionality
+
+    Users will gain sorting capabilities in module 11 by dragging entries around with handles, improving usability when managing multiple entries.
+
+Customization Options
+Overview of Upcoming Modules in Money Balls Development
+Module Features and Enhancements
+
+    The upcoming modules will include the addition of a menu and keyboard shortcuts to enhance user experience.
+
+    Interprocess communication will be established between the main process and the renderer process, improving app functionality.
+
+    In Module 18, developers will focus on creating a Windows version of the Money Balls application.
+
+    Module 19 will involve developing an iOS version of Money Balls, expanding its accessibility across platforms.
